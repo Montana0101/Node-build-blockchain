@@ -28,18 +28,19 @@
 const genesis = {
     index: 0,
     data: 'hello world',
-    hash: 'eb5213e49c65c6fdfc21bb1d0fa9f0d52538d1b1de844128836a4c40c89465cd',
     prevHash: '',
+    hash: 'eb5213e49c65c6fdfc21bb1d0fa9f0d52538d1b1de844128836a4c40c89465cd',
     timestamp: 1620476906480,
     nonce: 0
 }
 
 const crypto = require('crypto')
+
 class BlockChain {
     constructor() {
         this.blockChain = [genesis]
 
-        this.data = {}
+        this.data = null
         this.difficulty = 3
     }
 
@@ -55,10 +56,12 @@ class BlockChain {
         const block = this.generatedBlock()
         if (this.isValidBlock(block) && this.isValidChain()) {
             this.blockChain.push(block)
-            console.log(this.blockChain)
+            // console.log(block)
+            return block
         } else {
             console.log('Block validation failed')
         }
+        return 
     }
 
     // 生成区块
@@ -135,8 +138,10 @@ class BlockChain {
 
 let block = new BlockChain()
 
+module.exports = BlockChain
 block.mine()
-block.blockChain[1].nonce=22
+// block.blockChain[1].nonce=22
 block.mine()
 
-block.mine()
+// block.mine()
+
