@@ -40,7 +40,7 @@ class BlockChain {
     constructor() {
         this.blockChain = [genesis]
 
-        this.data = null
+        this.data = []
         this.difficulty = 3
     }
 
@@ -49,14 +49,27 @@ class BlockChain {
         return this.blockChain[this.blockChain.length - 1]
     }
 
+    // 转账
+    transfor(from,to,amount){
+        const transObj = {
+            from,to,amount
+        }
+        this.data.push(transObj)
+        return transObj
+    }
+
     // 挖矿
-    mine() {
+    mine(address) {
         // 生成新区块 一页新的记账加入区块链
         // 不停的计算哈希 直到符合的计算难度 获取记账权
+        // 矿工奖励
+        this.transfor('0',address,77)
         const block = this.generatedBlock()
+
         if (this.isValidBlock(block) && this.isValidChain()) {
             this.blockChain.push(block)
             // console.log(block)
+            this.data = []
             return block
         } else {
             console.log('Block validation failed')

@@ -5,6 +5,9 @@
   "repository": "https://github.com/Montana0101/Node-build-blockchain.git",
   "author": "montana <montana0101@outlook.com>",
   "license": "MIT",
+  "scripts": {
+    "dev":"node vorpal.js"
+  },
   "dependencies": {
     "cli-table": "^0.3.6",
     "vorpal": "^1.12.0"

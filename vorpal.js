@@ -17,18 +17,27 @@ const formatLog = (data) => {
     });
     
     let arr = data.map(i=>{
-        return heads.map(k=>{
-           return i[k]
-        })
+        return heads.map(k=>JSON.stringify(i[k],null,1))
     })
     table.push(...arr);
     console.log(table.toString());
 }
 
 vorpal
-    .command('mine', '挖矿')
+    .command('trans <from> <to> <amount>', '转账')
     .action(function (args, callback) {
-        const newBlock = _blockChain.mine()
+        const tarnsObj = _blockChain.transfor(args.from,args.to,args.amount)
+        if (tarnsObj) {
+            formatLog(tarnsObj)
+        }
+        callback();
+    });
+
+
+vorpal
+    .command('mine <address>', '挖矿')
+    .action(function (args, callback) {
+        const newBlock = _blockChain.mine(args.address)
         if (newBlock) {
             formatLog(newBlock)
         }
@@ -39,6 +48,14 @@ vorpal
     .command('chain', '查看区块链')
     .action(function (args, callback) {
         formatLog(_blockChain.blockChain)
+        callback();
+    });
+
+    vorpal
+    .command('detail <index>', '查看区块详情')
+    .action(function (args, callback) {
+        const block = _blockChain.blockChain[args.index]
+        this.log(block)
         callback();
     });
 
