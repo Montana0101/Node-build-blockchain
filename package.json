@@ -6,11 +6,13 @@
   "author": "montana <montana0101@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "node vorpal.js"
+    "dev": "parcel index.html",
+    "node": "node vorpal.js"
   },
   "dependencies": {
     "cli-table": "^0.3.6",
     "elliptic": "^6.5.4",
-    "vorpal": "^1.12.0"
+    "vorpal": "^1.12.0",
+    "xterm": "^4.12.0"
   }
 }
