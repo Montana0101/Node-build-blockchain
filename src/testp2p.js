@@ -12,7 +12,7 @@ udp.on('listening', () => {
     console.log(`udp server is listening ${address.address}:${address.port}`)
 })
 
-udp.bind(8002)
+udp.bind(0) // 空闲端口
 
 // udp 发送消息
 function send(message,port,host){
@@ -23,6 +23,5 @@ function send(message,port,host){
 const port = Number(process.argv[2])
 const host = process.argv[3]
 if(port && host){
-    send('first time build udp server , exciting',port,host)
+    send('雷猴~',port,host)
 }
-udp.bind()

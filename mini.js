@@ -35,13 +35,39 @@ const genesis = {
 }
 
 const crypto = require('crypto')
+const dgram = require('dgram')
 
 class BlockChain {
     constructor() {
         this.blockChain = [genesis]
 
+        this.init = 0 // 创世地址
         this.data = []
         this.difficulty = 3
+
+        // 所有的网络节点信息
+        this.peers = []
+        // 种子节点
+        this.seed = {
+            port:8001,
+            address:'localhost'
+        }
+
+        this.udp = dgram.createSocket('udp4')
+        this.init
+    }
+
+    init(){
+        this.bindP2p()
+        this.bindExit()
+    }
+
+    bindP2p(){
+        // 网络发来的消息
+        this.udp.on('message',(data,remote)=>{
+            const {address,port} = remote 
+            const action = JSON.parse(data)
+        })
     }
 
     // 获取最新区块
@@ -49,10 +75,38 @@ class BlockChain {
         return this.blockChain[this.blockChain.length - 1]
     }
 
+    // 查看余额
+    blance(address) {
+        let blance = 0
+        this.blockChain.forEach(block => {
+            if(!Array.isArray(block.data)){
+                return
+            }
+       
+            block.data.forEach(obj => {
+                if (obj.from == address) {
+                    blance -= obj.amount
+                }
+                if (obj.to == address) {
+                    blance += obj.amount
+                }
+            })
+        })
+        return blance
+    }
+
+
     // 转账
-    transfor(from,to,amount){
+    transfor(from, to, amount) {
+        // 判断是交易还是挖矿 挖矿不需要校验
+        if (from != this.init) {
+            const blance = this.blance(from)
+            if (blance < amount) {
+                console.log('not enough blance', from, blance, amount)
+            }
+        }
         const transObj = {
-            from,to,amount
+            from, to, amount
         }
         this.data.push(transObj)
         return transObj
@@ -63,7 +117,7 @@ class BlockChain {
         // 生成新区块 一页新的记账加入区块链
         // 不停的计算哈希 直到符合的计算难度 获取记账权
         // 矿工奖励
-        this.transfor('0',address,77)
+        this.transfor(this.init, address, 77)
         const block = this.generatedBlock()
 
         if (this.isValidBlock(block) && this.isValidChain()) {
@@ -74,7 +128,7 @@ class BlockChain {
         } else {
             console.log('Block validation failed')
         }
-        return 
+        return
     }
 
     // 生成区块

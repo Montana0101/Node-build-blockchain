@@ -51,7 +51,7 @@ function sign({ from, to, amount }) {
 // 3.校验
 function verify({ from, to, amount, signature }, pub) {
     // 校验是没有私钥的
-    const keypairTemp = ec.keyFromPublic(pub,'hex')
+    const keypairTemp = ec.keyFromPublic(pub, 'hex')
     const buffmsg = Buffer.from(`${from}-${to}-${amount}`)
     return keypairTemp.verify(buffmsg, signature)
 }
@@ -65,4 +65,4 @@ const _verify = verify(trans, keys.pub)
 
 // trans1.signature = signature
 // const _verify = verify(trans1, keys.pub)
-console.log('verfiy',_verify)
+console.log('verfiy', _verify)
