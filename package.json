@@ -12,7 +12,20 @@
   "dependencies": {
     "cli-table": "^0.3.6",
     "elliptic": "^6.5.4",
+    "node-pty": "^0.10.1",
     "vorpal": "^1.12.0",
-    "xterm": "^4.12.0"
+    "vue": "^2.6.12",
+    "vue-hot-reload-api": "^2.3.4",
+    "xterm": "^4.12.0",
+    "xterm-addon-attach": "^0.6.0",
+    "xterm-addon-fit": "^0.5.0"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "parcel-bundler": "^1.12.5",
+    "pug": "^3.0.2",
+    "sass": "^1.32.13",
+    "typescript": "^4.2.4",
+    "vue-template-compiler": "^2.6.12"
   }
 }
